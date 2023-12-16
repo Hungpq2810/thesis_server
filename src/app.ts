@@ -52,7 +52,7 @@ app.post('/api/v1/image/upload', upload.single('file'), (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 });
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 app.use(AppRoutes);
 app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, 'public')));

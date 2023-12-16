@@ -24,7 +24,7 @@ export const listRequestVolunteers = async (
       return;
     }
     const decodedToken = jwt.verify(token, secretKey) as jwt.JwtPayload;
-
+    console.log(decodedToken);
     const organizerId = decodedToken.id;
     const organizer = await Users.findOne({
       where: {
@@ -32,9 +32,10 @@ export const listRequestVolunteers = async (
         role_id: 2,
       },
     });
+
     if (organizer) {
       const requestVolunteers = await VolunteerRequest.findAll({
-        where: { organization_id: organizerId },
+        where: { organization_id: organizer.organization_id },
       });
       if (requestVolunteers.length > 0) {
         const response: GeneralResponse<{
@@ -49,7 +50,7 @@ export const listRequestVolunteers = async (
         const response: GeneralResponse<{}> = {
           status: 200,
           data: [],
-          message: 'Get list request volunteers successfully',
+          message: 'No request from volunteers',
         };
         commonResponse(req, res, response);
       }
@@ -99,7 +100,7 @@ export const updateRequestVolunteer = async (
           );
           if (result && accountUser) {
             const resultTwo = await accountUser.update({
-              organization_id: organizerId,
+              organization_id: organizer.organization_id,
               updated_at: new Date(),
             });
             if (resultTwo) {

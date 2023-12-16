@@ -58,7 +58,7 @@ Activities.init(
       allowNull: false,
     },
     image: {
-      type: new DataTypes.STRING(1250),
+      type: new DataTypes.BLOB("long"),
       allowNull: true,
     },
     location: {

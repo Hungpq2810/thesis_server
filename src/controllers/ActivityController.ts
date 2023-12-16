@@ -50,6 +50,8 @@ export const detailActivity = async (
     const activity = await Activities.findByPk(id);
 
     if (activity) {
+      const formattedImage = Buffer.from(activity.image).toString('utf-8');
+      activity.image = formattedImage
       const response: GeneralResponse<{
         activity: ActivityAttributes;
       }> = {

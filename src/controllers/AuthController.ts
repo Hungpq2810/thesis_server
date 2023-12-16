@@ -20,6 +20,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
       const user = account.toJSON();
       const objectToken = {
+        id: user.id,
         username: user.username,
         role_id: user.role_id,
         email: user.email,

@@ -24,9 +24,12 @@ export const createActivity = async (
 
     const decodedToken = jwt.verify(token, secretKey) as jwt.JwtPayload;
     const organizerId = decodedToken.id;
+    console.log(organizerId);
+    
     const organizer = await Users.findOne({
       where: { id: organizerId, role_id: 2 },
     });
+    console.log(organizer);
     if (organizer) {
       const body = {
         creator: organizerId as number,
@@ -35,6 +38,7 @@ export const createActivity = async (
         location: req.body.location as string,
         num_of_volunteers: 0,
         status: 1,
+        image: req.body.image,
         created_at: new Date(),
         updated_at: new Date(),
       };
@@ -85,7 +89,7 @@ export const updateActivity = async (
     });
 
     if (organizer) {
-      const activityId = req.params.id;
+      const activityId = req.params.id;      
       const activity = await Activities.findByPk(activityId);
       const newSkills = req.body.skills;
       if (activity && activity.creator === organizerId) {

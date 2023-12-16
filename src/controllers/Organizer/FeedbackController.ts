@@ -29,7 +29,7 @@ export const listFeedBackByOrganizer = async (
     });
     if (organizer) {
       const activities = await Activities.findAll({
-        where: { creator: organizerId },
+        where: { creator: organizer.organization_id },
       });
       const activityIds = activities.map((activity) => activity.id);
       const feedbacks = await Feedback.findAll({
