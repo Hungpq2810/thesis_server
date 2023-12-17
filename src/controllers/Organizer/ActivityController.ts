@@ -63,8 +63,8 @@ export const createActivity = async (
         }
         const response: GeneralResponse<{}> = {
           status: 200,
-          data: null,
-          message: 'Create successfull',
+          data: result,
+          message: 'Tạo thành công sự kiện',
         };
         commonResponse(req, res, response);
       }
@@ -133,7 +133,7 @@ export const updateActivity = async (
         const response: GeneralResponse<{}> = {
           status: 200,
           data: null,
-          message: 'Update successful',
+          message: 'Cập nhật thành công',
         };
         commonResponse(req, res, response);
       } else {
@@ -145,7 +145,7 @@ export const updateActivity = async (
     const response: GeneralResponse<{}> = {
       status: 400,
       data: null,
-      message: 'Error updating activity',
+      message: 'Xảy ra lỗi khi cập nhật',
     };
     commonResponse(req, res, response);
   }
@@ -179,7 +179,7 @@ export const deleteActivity = async (
         const response: GeneralResponse<{}> = {
           status: 200,
           data: null,
-          message: 'Delete successful',
+          message: 'Xóa hoạt động thành công',
         };
         commonResponse(req, res, response);
       } else {
@@ -191,7 +191,7 @@ export const deleteActivity = async (
     const response: GeneralResponse<{}> = {
       status: 400,
       data: null,
-      message: 'Error deleting activity',
+      message: 'Xảy ra lỗi khi xóa hoạt động',
     };
     commonResponse(req, res, response);
   }

@@ -57,14 +57,14 @@ export const detailActivity = async (
       }> = {
         status: 200,
         data: { activity },
-        message: 'Get activity details successfully',
+        message: 'Lấy hoạt động thành công',
       };
       commonResponse(req, res, response);
     } else {
       const response: GeneralResponse<{}> = {
         status: 404,
         data: null,
-        message: 'Activity not found',
+        message: 'Không tìm thấy hoạt động',
       };
       commonResponse(req, res, response);
     }
@@ -125,7 +125,7 @@ export const searchActivities = async (
     }> = {
       status: 200,
       data: { activities },
-      message: 'Search activities successfully',
+      message: 'Tìm sự kiện thành công',
     };
     commonResponse(req, res, response);
   } catch (error: any) {

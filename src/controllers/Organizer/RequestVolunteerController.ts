@@ -43,14 +43,14 @@ export const listRequestVolunteers = async (
         }> = {
           status: 200,
           data: { requestVolunteers },
-          message: 'Get list request volunteers successfully',
+          message: 'Lấy danh sách yêu cầu thành công',
         };
         commonResponse(req, res, response);
       } else {
         const response: GeneralResponse<{}> = {
           status: 200,
           data: [],
-          message: 'No request from volunteers',
+          message: 'Không có yêu cầu nào',
         };
         commonResponse(req, res, response);
       }
@@ -107,7 +107,7 @@ export const updateRequestVolunteer = async (
               const response: GeneralResponse<{}> = {
                 status: 200,
                 data: null,
-                message: 'Update successfully',
+                message: `Duyệt thành công cho thành viên ${req.body.user_id}`,
               };
               commonResponse(req, res, response);
             }
@@ -123,7 +123,7 @@ export const updateRequestVolunteer = async (
             const response: GeneralResponse<{}> = {
               status: 200,
               data: null,
-              message: 'Update successfully',
+              message: `Không duyệt cho thành viên ${req.body.user_id}`,
             };
             commonResponse(req, res, response);
           }

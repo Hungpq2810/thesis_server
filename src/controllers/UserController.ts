@@ -25,7 +25,7 @@ export const updateProfile = async (
       const response: GeneralResponse<{}> = {
         status: 400,
         data: null,
-        message: 'User not found',
+        message: 'Không tìm thấy user',
       };
       commonResponse(req, res, response);
       return;
@@ -48,7 +48,7 @@ export const updateProfile = async (
       const response: GeneralResponse<UserAttributes> = {
         status: 200,
         data: result.toJSON() as UserAttributes,
-        message: 'Update successfull',
+        message: 'Cập nhật thành công',
       };
       commonResponse(req, res, response);
     }
@@ -80,7 +80,7 @@ export const detailUser = async (
       const response: GeneralResponse<{}> = {
         status: 400,
         data: null,
-        message: 'User not found',
+        message: 'Không tìm thấy người dùng',
       };
       commonResponse(req, res, response);
       return;
@@ -96,7 +96,7 @@ export const detailUser = async (
     }> = {
       status: 200,
       data: { user: user.toJSON() as UserAttributes, skills: userSkills },
-      message: 'User details retrieved successfully',
+      message: 'Lấy thông tin người dùng thành công',
     };
     commonResponse(req, res, response);
   } catch (error: any) {

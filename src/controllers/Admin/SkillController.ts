@@ -21,7 +21,7 @@ export const createSkill = async (
       const response: GeneralResponse<{}> = {
         status: 400,
         data: null,
-        message: 'Create skill successfully',
+        message: 'Tạo kỹ năng thành công',
       };
       commonResponse(req, res, response);
     }
@@ -53,7 +53,7 @@ export const updateSkill = async (
       const response: GeneralResponse<{}> = {
         status: 200,
         data: null,
-        message: 'Update skill successfully',
+        message: 'Cập nhật kĩ năng thành công',
       };
       commonResponse(req, res, response);
     }
@@ -81,7 +81,7 @@ export const deleteSkill = async (
       const response: GeneralResponse<{}> = {
         status: 200,
         data: null,
-        message: 'Delete skill successfully',
+        message: 'Xóa kỹ năng thành công',
       };
       commonResponse(req, res, response);
     }

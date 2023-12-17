@@ -26,7 +26,7 @@ export const requestVolunteer = async (
         const response: GeneralResponse<{}> = {
           status: 400,
           data: null,
-          message: "Have an organization or you're an organization",
+          message: "Bạn đã là tổ chức",
         };
         commonResponse(req, res, response);
       } else {
@@ -40,7 +40,7 @@ export const requestVolunteer = async (
           const response: GeneralResponse<{}> = {
             status: 400,
             data: null,
-            message: 'Requested',
+            message: 'Bạn đã yêu cầu trở thành tổ chức',
           };
           commonResponse(req, res, response);
         } else {

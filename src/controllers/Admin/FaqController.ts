@@ -18,7 +18,7 @@ export const createFaq = async (req: Request, res: Response): Promise<void> => {
       const response: GeneralResponse<{}> = {
         status: 400,
         data: null,
-        message: 'Create successfully',
+        message: 'Tạo FAQ thành công',
       };
       commonResponse(req, res, response);
     }
@@ -37,7 +37,7 @@ export const updateFaq = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
     const faq = await FAQ.findByPk(id);
     if (!faq) {
-      res.status(404).json({ message: 'FAQ not found' });
+      res.status(404).json({ message: 'Không tìm thấy FAQ' });
       return;
     }
 
@@ -52,7 +52,7 @@ export const updateFaq = async (req: Request, res: Response): Promise<void> => {
     const response: GeneralResponse<{}> = {
       status: 200,
       data: null,
-      message: 'FAQ updated successfully',
+      message: 'Cập nhật FAQ thành công',
     };
     commonResponse(req, res, response);
   } catch (error: any) {
@@ -70,7 +70,7 @@ export const deleteFaq = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
     const faq = await FAQ.findByPk(id);
     if (!faq) {
-      res.status(404).json({ message: 'FAQ not found' });
+      res.status(404).json({ message: 'Không tìm thấy FAQ' });
       return;
     }
 
@@ -79,7 +79,7 @@ export const deleteFaq = async (req: Request, res: Response): Promise<void> => {
     const response: GeneralResponse<{}> = {
       status: 200,
       data: null,
-      message: 'FAQ deleted successfully',
+      message: 'Xóa FAQ thành công',
     };
     commonResponse(req, res, response);
   } catch (error: any) {

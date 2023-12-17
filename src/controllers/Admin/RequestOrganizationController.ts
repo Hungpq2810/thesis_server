@@ -24,14 +24,14 @@ export const listRequestOrganization = async (
       }> = {
         status: 200,
         data: { requestOrganizations },
-        message: 'Get list request organizations successfully',
+        message: 'Lấy danh sách yêu cầu tạo tổ chức thành công',
       };
       commonResponse(req, res, response);
     } else {
       const response: GeneralResponse<{}> = {
         status: 200,
         data: [],
-        message: 'Get list request organizations successfully',
+        message: 'Lấy danh sách yêu cầu tạo tổ chức thành công',
       };
       commonResponse(req, res, response);
     }
@@ -72,7 +72,7 @@ export const updateRequestOrganization = async (
             const response: GeneralResponse<{}> = {
               status: 200,
               data: null,
-              message: 'Update successfully',
+              message: `Duyệt thành công cho tổ chức có id ${resultTwo.organization_id}`,
             };
             commonResponse(req, res, response);
           }
@@ -90,7 +90,7 @@ export const updateRequestOrganization = async (
           const response: GeneralResponse<{}> = {
             status: 200,
             data: null,
-            message: 'Update successfully',
+            message: `Không duyệt cho tổ chức có id là ${organizationId}`,
           };
           commonResponse(req, res, response);
         }

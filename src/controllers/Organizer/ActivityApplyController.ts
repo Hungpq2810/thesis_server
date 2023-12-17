@@ -111,14 +111,14 @@ export const updateApplyVolunteer = async (
         );
         if (result && activity) {
           const resultTwo = await activity.update({
-            num_of_volunteers: activity.num_of_volunteers + 1,
+            // num_of_volunteers: activity.num_of_volunteers + 1,
             updated_at: new Date(),
           });
           if (resultTwo) {
             const response: GeneralResponse<{}> = {
               status: 200,
               data: null,
-              message: 'Update successfully',
+              message: 'Thay đổi trạng thái thành công',
             };
             commonResponse(req, res, response);
           }

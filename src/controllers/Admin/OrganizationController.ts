@@ -25,14 +25,14 @@ export const deleteOrganization = async (
       const response: GeneralResponse<{}> = {
         status: 200,
         data: null,
-        message: 'Delete organizations successfully',
+        message: `Xóa thành công tổ chức "${organization.name}"`,
       };
       commonResponse(req, res, response);
     } else {
       const response: GeneralResponse<{}> = {
         status: 200,
         data: [],
-        message: 'Not found Organization',
+        message: 'Không tìm thấy tổ chức',
       };
       commonResponse(req, res, response);
     }

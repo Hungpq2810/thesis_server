@@ -64,7 +64,7 @@ export const requestOrganization = async (
           const response: GeneralResponse<{}> = {
             status: 200,
             data: null,
-            message: 'Request successfull',
+            message: 'Yêu cầu trở thành tổ chức chính thức thành công',
           };
           commonResponse(req, res, response);
         }

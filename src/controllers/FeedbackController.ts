@@ -24,7 +24,7 @@ export const newFeedBack = async (
       const response: GeneralResponse<{}> = {
         status: 400,
         data: null,
-        message: 'User not found',
+        message: 'Không tìm thấy user',
       };
       commonResponse(req, res, response);
       return;
@@ -42,7 +42,7 @@ export const newFeedBack = async (
         const response: GeneralResponse<{}> = {
           status: 200,
           data: null,
-          message: 'Feedback successfully',
+          message: 'Gửi phản hồi thành công',
         };
         commonResponse(req, res, response);
       }
@@ -60,7 +60,7 @@ export const newFeedBack = async (
         const response: GeneralResponse<{}> = {
           status: 200,
           data: null,
-          message: 'Feedback successfully',
+          message: 'Gửi phản hồi thành công',
         };
         commonResponse(req, res, response);
       }

@@ -10,7 +10,7 @@ export const listSkills = async (
     const response: GeneralResponse<{ skills: SkillAttributes[] }> = {
       status: 200,
       data: { skills },
-      message: 'Get list of skills successfully',
+      message: 'Lấy danh sách kỹ năng thành công',
     };
     commonResponse(req, res, response);
   } catch (error: any) {

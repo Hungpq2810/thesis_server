@@ -7,7 +7,7 @@ export const listFaq = async (req: Request, res: Response): Promise<void> => {
     const response: GeneralResponse<{ faqs: FAQAttributes[] }> = {
       status: 200,
       data: { faqs },
-      message: 'Get list of faqs successfully',
+      message: 'Lấy danh sách faq thành công',
     };
     commonResponse(req, res, response);
   } catch (error: any) {

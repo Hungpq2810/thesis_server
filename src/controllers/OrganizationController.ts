@@ -18,14 +18,14 @@ export const listOrganization = async (
       }> = {
         status: 200,
         data: { organizations },
-        message: 'Get list organizations successfully',
+        message: 'Lấy danh sách tổ chức thành công',
       };
       commonResponse(req, res, response);
     } else {
       const response: GeneralResponse<{}> = {
         status: 200,
         data: [],
-        message: 'Get list organizations successfully',
+        message: 'Không có tổ chức nào',
       };
       commonResponse(req, res, response);
     }
@@ -67,7 +67,7 @@ export const createOrganization = async (
         const response: GeneralResponse<{}> = {
           status: 200,
           data: null,
-          message: 'Create successfull',
+          message: 'Tạo tổ chức thành công',
         };
         commonResponse(req, res, response);
       }

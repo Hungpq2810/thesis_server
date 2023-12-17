@@ -41,14 +41,14 @@ export const listFeedBackByOrganizer = async (
         }> = {
           status: 200,
           data: { feedbacks },
-          message: 'Get list feedback successfully',
+          message: 'Lấy danh sách phản hồi thành công',
         };
         commonResponse(req, res, response);
       } else {
         const response: GeneralResponse<{}> = {
           status: 200,
           data: [],
-          message: 'Get list feedback successfully',
+          message: 'Không có phản hồi nào',
         };
         commonResponse(req, res, response);
       }

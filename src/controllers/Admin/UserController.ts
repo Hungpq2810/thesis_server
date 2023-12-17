@@ -21,7 +21,7 @@ export const listUser = async (req: Request, res: Response): Promise<void> => {
     const response: GeneralResponse<{ users: UserAttributes[] }> = {
       status: 200,
       data: { users },
-      message: 'Get list users successfully',
+      message: 'Lấy danh sách user thành công',
     };
     commonResponse(req, res, response);
   } catch (error: any) {
@@ -47,7 +47,7 @@ export const getUserById = async (
       const response: GeneralResponse<{}> = {
         status: 404,
         data: null,
-        message: 'User not found',
+        message: 'Không tìm thấy user',
       };
       commonResponse(req, res, response);
       return;
@@ -56,7 +56,7 @@ export const getUserById = async (
     const response: GeneralResponse<UserAttributes> = {
       status: 200,
       data: user,
-      message: 'Get user by ID successfully',
+      message: 'Tìm người dùng theo id thành công',
     };
     commonResponse(req, res, response);
   } catch (error: any) {
@@ -81,7 +81,7 @@ export const updateUser = async (
       const response: GeneralResponse<{}> = {
         status: 400,
         data: null,
-        message: 'User not found',
+        message: 'Không tìm thấy người dùng',
       };
       commonResponse(req, res, response);
       return;
@@ -91,7 +91,7 @@ export const updateUser = async (
       const response: GeneralResponse<UserAttributes> = {
         status: 200,
         data: result.toJSON() as UserAttributes,
-        message: 'Update successfull',
+        message: 'Cập nhật người dùng thành công',
       };
       commonResponse(req, res, response);
     }
@@ -121,7 +121,7 @@ export const deleteUser = async (
       const response: GeneralResponse<{}> = {
         status: 400,
         data: null,
-        message: 'User not found',
+        message: 'Không tìm thấy người dùng',
       };
       commonResponse(req, res, response);
       return;

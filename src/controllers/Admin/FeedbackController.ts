@@ -19,14 +19,14 @@ export const listFeedBack = async (
       }> = {
         status: 200,
         data: { feedbacks },
-        message: 'Get list feedback successfully',
+        message: 'Lấy danh sách phản hồi thành công',
       };
       commonResponse(req, res, response);
     } else {
       const response: GeneralResponse<{}> = {
         status: 200,
         data: [],
-        message: 'Get list feedback successfully',
+        message: 'Chưa có phản hồi hệ thống',
       };
       commonResponse(req, res, response);
     }

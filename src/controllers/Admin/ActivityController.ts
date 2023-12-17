@@ -23,7 +23,7 @@ export const deleteActivityByAdmin = async (
       const response: GeneralResponse<{}> = {
         status: 200,
         data: null,
-        message: 'Delete successful',
+        message: 'Xóa sự kiện thành công',
       };
       commonResponse(req, res, response);
     } else {
@@ -34,7 +34,7 @@ export const deleteActivityByAdmin = async (
     const response: GeneralResponse<{}> = {
       status: 400,
       data: null,
-      message: 'Error deleting activity',
+      message: 'Gặp lỗi khi xóa sự kiện',
     };
     commonResponse(req, res, response);
   }
