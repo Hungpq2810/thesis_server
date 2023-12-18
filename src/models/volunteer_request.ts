@@ -15,7 +15,10 @@ interface VolunteerRequestCreationAttributes
   extends Optional<VolunteerRequestAttributes, 'id'> {}
 
 class VolunteerRequest
-  extends Model<VolunteerRequestAttributes, VolunteerRequestCreationAttributes>
+  extends Model<
+    VolunteerRequestAttributes,
+    VolunteerRequestCreationAttributes
+  >
   implements VolunteerRequestAttributes
 {
   public id!: number;
@@ -68,7 +71,10 @@ VolunteerRequest.init(
     updatedAt: false,
   },
 );
-VolunteerRequest.belongsTo(Users, { foreignKey: 'user_id', as: 'users' });
+VolunteerRequest.belongsTo(Users, {
+  foreignKey: 'user_id',
+  as: 'users',
+});
 VolunteerRequest.belongsTo(Organization, {
   foreignKey: 'organization_id',
   as: 'organizations',

@@ -24,7 +24,10 @@ export const listApplyVolunteers = async (
       res.status(401).json({ message: 'Unauthorized' });
       return;
     }
-    const decodedToken = jwt.verify(token, secretKey) as jwt.JwtPayload;
+    const decodedToken = jwt.verify(
+      token,
+      secretKey,
+    ) as jwt.JwtPayload;
     const organizerId = decodedToken.id;
     const organizer = await Users.findOne({
       where: {
@@ -33,16 +36,18 @@ export const listApplyVolunteers = async (
       },
     });
     console.log(organizer);
-    
+
     if (organizer) {
       const activityExits = await Activities.findAll({
         where: { creator: organizer.organization_id },
       });
-      console.log("Find activity");
-      
+      console.log('Find activity');
+
       console.log(activityExits);
-      
-      const activityIds = activityExits.map((activity) => activity.id);
+
+      const activityIds = activityExits.map(
+        (activity) => activity.id,
+      );
       const appliedVolunteers = await ActivityApply.findAll({
         where: { activity_id: activityIds },
       });
@@ -85,7 +90,10 @@ export const updateApplyVolunteer = async (
       res.status(401).json({ message: 'Unauthorized' });
       return;
     }
-    const decodedToken = jwt.verify(token, secretKey) as jwt.JwtPayload;
+    const decodedToken = jwt.verify(
+      token,
+      secretKey,
+    ) as jwt.JwtPayload;
     const organizerId = decodedToken.id;
     const organizer = await Users.findOne({
       where: {
@@ -98,12 +106,18 @@ export const updateApplyVolunteer = async (
       const activityId = req.body.activity_id as number;
       const checkStatus = req.body.status as number;
 
-      const body = { status: checkStatus, updated_at: new Date() };
+      const body = {
+        status: checkStatus,
+        updated_at: new Date(),
+      };
 
       const volunteerApplyRecord = await ActivityApply.findOne({
-        where: { user_id: volunteerId, activity_id: activityId },
+        where: {
+          user_id: volunteerId,
+          activity_id: activityId,
+        },
       });
-      
+
       if (volunteerApplyRecord) {
         const result = await volunteerApplyRecord.update(body);
         const activity = await Activities.findByPk(
@@ -124,7 +138,6 @@ export const updateApplyVolunteer = async (
           }
         }
       }
-      
     }
   } catch (error: any) {
     console.error(error);

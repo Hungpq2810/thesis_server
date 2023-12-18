@@ -8,7 +8,8 @@ export interface FAQAttributes {
   created_at: Date;
   updated_at: Date;
 }
-interface FAQCreationAttributes extends Optional<FAQAttributes, 'id'> {}
+interface FAQCreationAttributes
+  extends Optional<FAQAttributes, 'id'> {}
 
 class FAQ
   extends Model<FAQAttributes, FAQCreationAttributes>

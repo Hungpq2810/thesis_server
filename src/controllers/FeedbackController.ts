@@ -1,7 +1,10 @@
 import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import * as dotenv from 'dotenv';
-import { GeneralResponse, commonResponse } from '../utilities/CommonResponse';
+import {
+  GeneralResponse,
+  commonResponse,
+} from '../utilities/CommonResponse';
 import { Users } from '../models/users';
 import { Feedback } from '../models/feedback';
 dotenv.config();
@@ -17,7 +20,10 @@ export const newFeedBack = async (
       res.status(401).json({ message: 'Unauthorized' });
       return;
     }
-    const decodedToken = jwt.verify(token, secretKey) as jwt.JwtPayload;
+    const decodedToken = jwt.verify(
+      token,
+      secretKey,
+    ) as jwt.JwtPayload;
     const userId = decodedToken.id;
     const user = await Users.findByPk(userId);
     if (!user) {

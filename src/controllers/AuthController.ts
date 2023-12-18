@@ -1,12 +1,18 @@
 import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { UserAttributes, Users } from '../models/users';
-import { GeneralResponse, commonResponse } from '../utilities/CommonResponse';
+import {
+  GeneralResponse,
+  commonResponse,
+} from '../utilities/CommonResponse';
 import * as dotenv from 'dotenv';
 dotenv.config();
 const secretKey = process.env.SECRETKEY as string;
 
-export const login = async (req: Request, res: Response): Promise<void> => {
+export const login = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   const { username, password } = req.body;
   try {
     const account = await Users.findOne({
@@ -17,14 +23,13 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       },
     });
     if (account) {
-
       const user = account.toJSON();
       const objectToken = {
         id: user.id,
         username: user.username,
         role_id: user.role_id,
         email: user.email,
-      }
+      };
       const token = jwt.sign(objectToken, secretKey);
       const response: GeneralResponse<{ token: string }> = {
         status: 200,
@@ -49,7 +54,10 @@ export const login = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export const register = async (req: Request, res: Response): Promise<void> => {
+export const register = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   try {
     const {
       username,
@@ -85,7 +93,9 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       updated_at: new Date(),
     });
     if (user) {
-      const response: GeneralResponse<{ user: UserAttributes }> = {
+      const response: GeneralResponse<{
+        user: UserAttributes;
+      }> = {
         status: 200,
         data: { user },
         message: 'Success: Register in successfully!',
@@ -125,7 +135,9 @@ export const resetPassword = async (
       return;
     }
     try {
-      const user = await Users.findOne({ where: { email: email, status: 0 } });
+      const user = await Users.findOne({
+        where: { email: email, status: 0 },
+      });
       if (user) {
         const checkPassword = await Users.findOne({
           where: { password: passwordOld },

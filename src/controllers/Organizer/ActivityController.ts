@@ -22,10 +22,13 @@ export const createActivity = async (
       return;
     }
 
-    const decodedToken = jwt.verify(token, secretKey) as jwt.JwtPayload;
+    const decodedToken = jwt.verify(
+      token,
+      secretKey,
+    ) as jwt.JwtPayload;
     const organizerId = decodedToken.id;
     console.log(organizerId);
-    
+
     const organizer = await Users.findOne({
       where: { id: organizerId, role_id: 2 },
     });
@@ -54,7 +57,9 @@ export const createActivity = async (
                 created_at: new Date(),
                 updated_at: new Date(),
               };
-              return await SkillActivities.create(bodySkillActivities);
+              return await SkillActivities.create(
+                bodySkillActivities,
+              );
             },
           );
           await Promise.all(skillActivitiesPromises);
@@ -82,14 +87,17 @@ export const updateActivity = async (
       return;
     }
 
-    const decodedToken = jwt.verify(token, secretKey) as jwt.JwtPayload;
+    const decodedToken = jwt.verify(
+      token,
+      secretKey,
+    ) as jwt.JwtPayload;
     const organizerId = decodedToken.id;
     const organizer = await Users.findOne({
       where: { id: organizerId, role_id: 2 },
     });
 
     if (organizer) {
-      const activityId = req.params.id;      
+      const activityId = req.params.id;
       const activity = await Activities.findByPk(activityId);
       const newSkills = req.body.skills;
       if (activity && activity.creator === organizerId) {
@@ -104,11 +112,13 @@ export const updateActivity = async (
           where: { id: activityId },
         });
 
-        const existingSkillActivities = await SkillActivities.findAll({
-          where: {
-            activity_id: activityId,
+        const existingSkillActivities = await SkillActivities.findAll(
+          {
+            where: {
+              activity_id: activityId,
+            },
           },
-        });
+        );
         const existingSkills = existingSkillActivities.map(
           (skillActivity) => skillActivity.skill_id,
         );
@@ -161,7 +171,10 @@ export const deleteActivity = async (
       return;
     }
 
-    const decodedToken = jwt.verify(token, secretKey) as jwt.JwtPayload;
+    const decodedToken = jwt.verify(
+      token,
+      secretKey,
+    ) as jwt.JwtPayload;
     const organizerId = decodedToken.id;
     const organizer = await Users.findOne({
       where: { id: organizerId, role_id: 2 },

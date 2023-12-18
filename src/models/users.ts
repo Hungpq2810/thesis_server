@@ -20,7 +20,8 @@ export interface UserAttributes {
   updated_at: Date;
 }
 
-interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
+interface UserCreationAttributes
+  extends Optional<UserAttributes, 'id'> {}
 
 class Users
   extends Model<UserAttributes, UserCreationAttributes>

@@ -13,7 +13,9 @@ export const deleteOrganization = async (
   try {
     const { id } = req.params;
     const organization = await Organization.findByPk(id);
-    const user = await Users.findOne({ where: { organization_id: id } });
+    const user = await Users.findOne({
+      where: { organization_id: id },
+    });
     if (organization) {
       await organization.destroy();
       if (user) {

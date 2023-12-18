@@ -10,7 +10,9 @@ export class Constant {
     let result = '';
 
     while (result.length < length) {
-      const randomIndex = Math.floor(Math.random() * characters.length);
+      const randomIndex = Math.floor(
+        Math.random() * characters.length,
+      );
       const character = characters.charAt(randomIndex);
 
       if (/[a-zA-Z0-9]/.test(character)) {

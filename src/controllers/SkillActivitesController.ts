@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
-import { GeneralResponse, commonResponse } from '../utilities/CommonResponse';
+import {
+  GeneralResponse,
+  commonResponse,
+} from '../utilities/CommonResponse';
 import { SkillActivities } from '../models/skill_activities';
 import { Activities, ActivityAttributes } from '../models/activities';
 export const listActivitesBySkills = async (
@@ -17,13 +20,17 @@ export const listActivitesBySkills = async (
       raw: true,
     });
     if (uniqueActivityIds) {
-      const uniqueIds = uniqueActivityIds.map((item) => item.activity_id);
+      const uniqueIds = uniqueActivityIds.map(
+        (item) => item.activity_id,
+      );
       const activities = await Activities.findAll({
         where: {
           id: uniqueIds,
         },
       });
-      const response: GeneralResponse<{ activities: ActivityAttributes[] }> = {
+      const response: GeneralResponse<{
+        activities: ActivityAttributes[];
+      }> = {
         status: 200,
         data: { activities },
         message: 'Get list of skills successfully',

@@ -54,9 +54,10 @@ export const updateRequestOrganization = async (
     const checkStatus = req.body.status as number;
     if (checkStatus === 0) {
       const body = { status: 0, updated_at: new Date() };
-      const organizationRequestRecord = await OrganizationRequest.findOne({
-        where: { organization_id: organizationId },
-      });
+      const organizationRequestRecord =
+        await OrganizationRequest.findOne({
+          where: { organization_id: organizationId },
+        });
       if (organizationRequestRecord) {
         const result = await organizationRequestRecord.update(body);
         const accountUser = await Users.findByPk(
@@ -65,7 +66,8 @@ export const updateRequestOrganization = async (
         if (result && accountUser) {
           const resultTwo = await accountUser.update({
             role_id: 2,
-            organization_id: organizationRequestRecord.organization_id,
+            organization_id:
+              organizationRequestRecord.organization_id,
             updated_at: new Date(),
           });
           if (resultTwo) {
@@ -82,7 +84,8 @@ export const updateRequestOrganization = async (
       const body = { status: 2, updated_at: new Date() };
       const organizationRequestRecord =
         await OrganizationRequest.findByPk(organizationId);
-      const organization = await Organization.findByPk(organizationId);
+      const organization =
+        await Organization.findByPk(organizationId);
       if (organizationRequestRecord && organization) {
         const result = await organizationRequestRecord.update(body);
         await organization.update({ status: 1 });

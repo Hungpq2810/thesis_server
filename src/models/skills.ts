@@ -10,7 +10,8 @@ export interface SkillAttributes {
   updated_at: Date;
 }
 
-interface SkillCreationAttributes extends Optional<SkillAttributes, 'id'> {}
+interface SkillCreationAttributes
+  extends Optional<SkillAttributes, 'id'> {}
 
 class Skills
   extends Model<SkillAttributes, SkillCreationAttributes>

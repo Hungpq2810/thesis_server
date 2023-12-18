@@ -1,7 +1,10 @@
 import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import * as dotenv from 'dotenv';
-import { GeneralResponse, commonResponse } from '../utilities/CommonResponse';
+import {
+  GeneralResponse,
+  commonResponse,
+} from '../utilities/CommonResponse';
 import { UserAttributes, Users } from '../models/users';
 import { SkillUsers } from '../models/skill_users';
 dotenv.config();
@@ -18,7 +21,10 @@ export const updateProfile = async (
       return;
     }
 
-    const decodedToken = jwt.verify(token, secretKey) as jwt.JwtPayload;
+    const decodedToken = jwt.verify(
+      token,
+      secretKey,
+    ) as jwt.JwtPayload;
     const userId = decodedToken.id;
     const user = await Users.findByPk(userId);
     if (!user) {
@@ -73,7 +79,10 @@ export const detailUser = async (
       return;
     }
 
-    const decodedToken = jwt.verify(token, secretKey) as jwt.JwtPayload;
+    const decodedToken = jwt.verify(
+      token,
+      secretKey,
+    ) as jwt.JwtPayload;
     const userId = decodedToken.id;
     const user = await Users.findByPk(userId);
     if (!user) {
@@ -95,7 +104,10 @@ export const detailUser = async (
       skills: SkillUsers[];
     }> = {
       status: 200,
-      data: { user: user.toJSON() as UserAttributes, skills: userSkills },
+      data: {
+        user: user.toJSON() as UserAttributes,
+        skills: userSkills,
+      },
       message: 'Lấy thông tin người dùng thành công',
     };
     commonResponse(req, res, response);

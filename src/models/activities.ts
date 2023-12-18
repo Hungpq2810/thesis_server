@@ -58,7 +58,7 @@ Activities.init(
       allowNull: false,
     },
     image: {
-      type: new DataTypes.BLOB("long"),
+      type: new DataTypes.BLOB('long'),
       allowNull: true,
     },
     location: {
@@ -90,5 +90,8 @@ Activities.init(
     updatedAt: false,
   },
 );
-Activities.belongsTo(Users, { foreignKey: 'creator', as: 'user' });
+Activities.belongsTo(Users, {
+  foreignKey: 'creator',
+  as: 'user',
+});
 export { Activities };

@@ -1,8 +1,14 @@
 import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import * as dotenv from 'dotenv';
-import { GeneralResponse, commonResponse } from '../utilities/CommonResponse';
-import { Organization, OrganizationAttributes } from '../models/organization';
+import {
+  GeneralResponse,
+  commonResponse,
+} from '../utilities/CommonResponse';
+import {
+  Organization,
+  OrganizationAttributes,
+} from '../models/organization';
 dotenv.config();
 const secretKey = process.env.SECRETKEY as string;
 
@@ -11,7 +17,9 @@ export const listOrganization = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const organizations = await Organization.findAll({ where: { status: 0 } });
+    const organizations = await Organization.findAll({
+      where: { status: 0 },
+    });
     if (organizations.length > 0) {
       const response: GeneralResponse<{
         organizations: OrganizationAttributes[];
@@ -50,7 +58,10 @@ export const createOrganization = async (
       return;
     }
 
-    const decodedToken = jwt.verify(token, secretKey) as jwt.JwtPayload;
+    const decodedToken = jwt.verify(
+      token,
+      secretKey,
+    ) as jwt.JwtPayload;
     const userId = decodedToken.id;
     if (userId) {
       const body = {

@@ -23,7 +23,10 @@ export const listRequestVolunteers = async (
       res.status(401).json({ message: 'Unauthorized' });
       return;
     }
-    const decodedToken = jwt.verify(token, secretKey) as jwt.JwtPayload;
+    const decodedToken = jwt.verify(
+      token,
+      secretKey,
+    ) as jwt.JwtPayload;
     console.log(decodedToken);
     const organizerId = decodedToken.id;
     const organizer = await Users.findOne({
@@ -35,7 +38,9 @@ export const listRequestVolunteers = async (
 
     if (organizer) {
       const requestVolunteers = await VolunteerRequest.findAll({
-        where: { organization_id: organizer.organization_id },
+        where: {
+          organization_id: organizer.organization_id,
+        },
       });
       if (requestVolunteers.length > 0) {
         const response: GeneralResponse<{
@@ -76,7 +81,10 @@ export const updateRequestVolunteer = async (
       res.status(401).json({ message: 'Unauthorized' });
       return;
     }
-    const decodedToken = jwt.verify(token, secretKey) as jwt.JwtPayload;
+    const decodedToken = jwt.verify(
+      token,
+      secretKey,
+    ) as jwt.JwtPayload;
 
     const organizerId = decodedToken.id;
     const organizer = await Users.findOne({
@@ -90,9 +98,11 @@ export const updateRequestVolunteer = async (
       const checkStatus = req.body.status as number;
       if (checkStatus === 0) {
         const body = { status: 0, updated_at: new Date() };
-        const volunteerRequestRecord = await VolunteerRequest.findOne({
-          where: { user_id: volunteerId },
-        });
+        const volunteerRequestRecord = await VolunteerRequest.findOne(
+          {
+            where: { user_id: volunteerId },
+          },
+        );
         if (volunteerRequestRecord) {
           const result = await volunteerRequestRecord.update(body);
           const accountUser = await Users.findByPk(

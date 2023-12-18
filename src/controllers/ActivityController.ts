@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 import * as dotenv from 'dotenv';
-import { GeneralResponse, commonResponse } from '../utilities/CommonResponse';
+import {
+  GeneralResponse,
+  commonResponse,
+} from '../utilities/CommonResponse';
 import { Activities, ActivityAttributes } from '../models/activities';
 import { Op } from 'sequelize';
 import { SkillActivities } from '../models/skill_activities';
@@ -50,8 +53,10 @@ export const detailActivity = async (
     const activity = await Activities.findByPk(id);
 
     if (activity) {
-      const formattedImage = Buffer.from(activity.image).toString('utf-8');
-      activity.image = formattedImage
+      const formattedImage = Buffer.from(activity.image).toString(
+        'utf-8',
+      );
+      activity.image = formattedImage;
       const response: GeneralResponse<{
         activity: ActivityAttributes;
       }> = {

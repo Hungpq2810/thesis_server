@@ -1,10 +1,13 @@
 import { Request, Response } from 'express';
 import * as dotenv from 'dotenv';
 import * as jwt from 'jsonwebtoken';
-import { GeneralResponse, commonResponse } from '../utilities/CommonResponse';
+import {
+  GeneralResponse,
+  commonResponse,
+} from '../utilities/CommonResponse';
 import { Users } from '../models/users';
 import { ActivityApply } from '../models/activity_apply';
-import {Activities} from "../models/activities";
+import { Activities } from '../models/activities';
 dotenv.config();
 const secretKey = process.env.SECRETKEY as string;
 
@@ -18,7 +21,10 @@ export const activityApplyVolunteer = async (
       res.status(401).json({ message: 'Unauthorized' });
       return;
     }
-    const decodedToken = jwt.verify(token, secretKey) as jwt.JwtPayload;
+    const decodedToken = jwt.verify(
+      token,
+      secretKey,
+    ) as jwt.JwtPayload;
     const userId = decodedToken.id;
     const user = await Users.findByPk(userId);
 
@@ -53,13 +59,15 @@ export const activityApplyVolunteer = async (
             created_at: new Date(),
             updated_at: new Date(),
           };
-          const activity = await Activities.findByPk(req.body.activity_id);
+          const activity = await Activities.findByPk(
+            req.body.activity_id,
+          );
           const result = await ActivityApply.create(body);
           if (result) {
             const response: GeneralResponse<{}> = {
               status: 200,
               data: null,
-              message: `Bạn đã đăng ký thành công cho sự kiện ${activity?.name}`
+              message: `Bạn đã đăng ký thành công cho sự kiện ${activity?.name}`,
             };
             commonResponse(req, res, response);
           }
@@ -78,25 +86,31 @@ export const activityApplyVolunteer = async (
 };
 
 export const cancelApplyToActivity = async (
-    req: Request,
-    res: Response,
+  req: Request,
+  res: Response,
 ): Promise<void> => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
-      res.status(401).json({message: 'Unauthorized'});
+      res.status(401).json({ message: 'Unauthorized' });
       return;
     }
-    const decodedToken = jwt.verify(token, secretKey) as jwt.JwtPayload;
+    const decodedToken = jwt.verify(
+      token,
+      secretKey,
+    ) as jwt.JwtPayload;
     const userId = decodedToken.id;
     const user = await Users.findByPk(userId);
 
     if (user) {
-      const body = { status: 5 }
+      const body = { status: 5 };
       const activityId = req.body.activity_id as number;
 
       const volunteerApplyRecord = await ActivityApply.findOne({
-        where: { user_id: userId, activity_id: activityId }
+        where: {
+          user_id: userId,
+          activity_id: activityId,
+        },
       });
 
       if (volunteerApplyRecord) {
@@ -108,7 +122,6 @@ export const cancelApplyToActivity = async (
           message: 'Bạn đã hủy đăng ký thành công',
         };
         commonResponse(req, res, response);
-
       }
     }
   } catch (error: any) {
@@ -120,4 +133,4 @@ export const cancelApplyToActivity = async (
     };
     commonResponse(req, res, response);
   }
-}
+};

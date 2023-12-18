@@ -26,13 +26,16 @@ class EmailUtils {
       text: emailDetails.body,
     };
 
-    this.transporter.sendMail(mailOptions, (error: any, info: any) => {
-      if (error) {
-        console.error('Error occurred while sending email:', error);
-      } else {
-        console.log('Email sent:', info.response);
-      }
-    });
+    this.transporter.sendMail(
+      mailOptions,
+      (error: any, info: any) => {
+        if (error) {
+          console.error('Error occurred while sending email:', error);
+        } else {
+          console.log('Email sent:', info.response);
+        }
+      },
+    );
   }
 }
 

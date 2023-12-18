@@ -16,7 +16,10 @@ interface ActivityApplyCreationAttributes
   extends Optional<ActivityApplyAttributes, 'id'> {}
 
 class ActivityApply
-  extends Model<ActivityApplyAttributes, ActivityApplyCreationAttributes>
+  extends Model<
+    ActivityApplyAttributes,
+    ActivityApplyCreationAttributes
+  >
   implements ActivityApplyAttributes
 {
   public id!: number;
@@ -69,7 +72,10 @@ ActivityApply.init(
     updatedAt: false,
   },
 );
-ActivityApply.belongsTo(Users, { foreignKey: 'user_id', as: 'users' });
+ActivityApply.belongsTo(Users, {
+  foreignKey: 'user_id',
+  as: 'users',
+});
 ActivityApply.belongsTo(Activities, {
   foreignKey: 'activity_id',
   as: 'activities',

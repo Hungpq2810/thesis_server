@@ -30,7 +30,10 @@ export const authenticateToken = (
   });
 };
 
-export const generateToken = (userId: string, role: string): string => {
+export const generateToken = (
+  userId: string,
+  role: string,
+): string => {
   const payload: JWTPayload = {
     userId: userId,
     role: role, // Thêm role vào payload

@@ -1,7 +1,10 @@
 import { Request, Response } from 'express';
 import * as dotenv from 'dotenv';
 import * as jwt from 'jsonwebtoken';
-import { GeneralResponse, commonResponse } from '../utilities/CommonResponse';
+import {
+  GeneralResponse,
+  commonResponse,
+} from '../utilities/CommonResponse';
 import { Users } from '../models/users';
 import { OrganizationRequest } from '../models/organization_request';
 import { Organization } from '../models/organization';
@@ -20,7 +23,10 @@ export const requestOrganization = async (
       return;
     }
 
-    const decodedToken = jwt.verify(token, secretKey) as jwt.JwtPayload;
+    const decodedToken = jwt.verify(
+      token,
+      secretKey,
+    ) as jwt.JwtPayload;
     const userId = decodedToken.id;
     const user = await Users.findByPk(userId);
     if (user) {
@@ -64,7 +70,8 @@ export const requestOrganization = async (
           const response: GeneralResponse<{}> = {
             status: 200,
             data: null,
-            message: 'Yêu cầu trở thành tổ chức chính thức thành công',
+            message:
+              'Yêu cầu trở thành tổ chức chính thức thành công',
           };
           commonResponse(req, res, response);
         }

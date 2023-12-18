@@ -15,7 +15,10 @@ interface OrganizationCreationAttributes
   extends Optional<OrganizationAttributes, 'id'> {}
 
 class Organization
-  extends Model<OrganizationAttributes, OrganizationCreationAttributes>
+  extends Model<
+    OrganizationAttributes,
+    OrganizationCreationAttributes
+  >
   implements OrganizationAttributes
 {
   public id!: number;

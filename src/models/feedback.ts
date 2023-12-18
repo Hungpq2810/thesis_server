@@ -82,7 +82,13 @@ Feedback.init(
     updatedAt: false,
   },
 );
-Feedback.belongsTo(Users, { foreignKey: 'user_id', as: 'users' });
-Feedback.belongsTo(Activities, { foreignKey: 'activity_id', as: 'activities' });
+Feedback.belongsTo(Users, {
+  foreignKey: 'user_id',
+  as: 'users',
+});
+Feedback.belongsTo(Activities, {
+  foreignKey: 'activity_id',
+  as: 'activities',
+});
 
 export { Feedback };
