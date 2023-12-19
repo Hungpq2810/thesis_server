@@ -88,3 +88,58 @@ export const requestVolunteer = async (
     commonResponse(req, res, response);
   }
 };
+
+export const cancelRequestVolunteer = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+      res.status(401).json({ message: 'Unauthorized' });
+      return;
+    }
+    const decodedToken = jwt.verify(
+      token,
+      secretKey,
+    ) as jwt.JwtPayload;
+    const userId = decodedToken.id;
+    const user = await Users.findByPk(userId);
+    if (user) {
+      if (user.organization_id && user.role_id === 2) {
+        const response: GeneralResponse<{}> = {
+          status: 400,
+          data: null,
+          message: 'Bạn đã là tổ chức',
+        };
+        commonResponse(req, res, response);
+      } else {
+        const checkRequestTime = await VolunteerRequest.findAll({
+          where: {
+            user_id: userId,
+            status: 1,
+          },
+        });
+        if (checkRequestTime.length > 0) {
+          await VolunteerRequest.destroy(
+            {where: { user_id: userId }}
+          )
+        }
+        const response: GeneralResponse<{}> = {
+          status: 200,
+          data: null,
+          message: 'Hủy đăng ký thành công',
+        };
+      }
+    }
+  }
+  catch (error: any) {
+    console.error(error);
+    const response: GeneralResponse<{}> = {
+      status: 400,
+      data: null,
+      message: error.message,
+    };
+    commonResponse(req, res, response);
+  }
+};

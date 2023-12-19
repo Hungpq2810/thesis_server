@@ -8,6 +8,7 @@ import { Activities, ActivityAttributes } from '../models/activities';
 import { Op } from 'sequelize';
 import { SkillActivities } from '../models/skill_activities';
 import { Skills } from '../models/skills';
+import { mappedActivities } from "../mapper/ActivityMapper";
 dotenv.config();
 
 export const listActivity = async (
@@ -15,13 +16,14 @@ export const listActivity = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const activities = await Activities.findAll();
+    const activitiesCurrent = await Activities.findAll();
+    const activities = await Promise.all(mappedActivities(activitiesCurrent));
     if (activities.length > 0) {
       const response: GeneralResponse<{
         activities: ActivityAttributes[];
       }> = {
         status: 200,
-        data: { activities },
+        data: { activities: activities as unknown as ActivityAttributes[] },
         message: 'Get list activities successfully',
       };
       commonResponse(req, res, response);
@@ -53,23 +55,32 @@ export const detailActivity = async (
     const activity = await Activities.findByPk(id);
 
     if (activity) {
-      const formattedImage = Buffer.from(activity.image).toString(
-        'utf-8',
-      );
-      activity.image = formattedImage;
-      const response: GeneralResponse<{
-        activity: ActivityAttributes;
-      }> = {
-        status: 200,
-        data: { activity },
-        message: 'Lấy hoạt động thành công',
-      };
-      commonResponse(req, res, response);
+      const activities = [activity];
+      const mappedResult = await Promise.all(mappedActivities(activities));
+
+      if (mappedResult.length > 0) {
+        const resolvedActivity = mappedResult[0];
+        if (resolvedActivity !== null) {
+          const response: any = {
+            status: 200,
+            data: resolvedActivity,
+            message: "Get activity details successfully",
+          };
+          commonResponse(req, res, response);
+        }
+      } else {
+        const response: GeneralResponse<{}> = {
+          status: 404,
+          data: null,
+          message: "Activity not found",
+        };
+        commonResponse(req, res, response);
+      }
     } else {
       const response: GeneralResponse<{}> = {
         status: 404,
         data: null,
-        message: 'Không tìm thấy hoạt động',
+        message: "Activity not found",
       };
       commonResponse(req, res, response);
     }
@@ -83,6 +94,7 @@ export const detailActivity = async (
     commonResponse(req, res, response);
   }
 };
+
 export const searchActivities = async (
   req: Request,
   res: Response,

@@ -22,8 +22,12 @@ import {
 import {
   createOrganization,
   listOrganization,
+  detailOrganization
 } from '../controllers/OrganizationController';
-import { deleteOrganization } from '../controllers/Admin/OrganizationController';
+import { 
+  deleteOrganization,
+  updateOrganization
+} from '../controllers/Admin/OrganizationController';
 import { requestOrganization } from '../controllers/RequestOrganizationController';
 import {
   listRequestOrganization,
@@ -107,6 +111,12 @@ router.delete(
   authenticateToken,
   checkRoleAdmin,
   deleteOrganization,
+);
+router.put(
+  "/api/v1/admin/organizations/:id", 
+  authenticateToken, 
+  checkRoleAdmin, 
+  updateOrganization
 );
 //Request Organization
 router.get(
@@ -231,6 +241,7 @@ router.put('/api/v1/user', authenticateToken, updateProfile);
 router.get('/api/v1/user', authenticateToken, detailUser);
 //Organization
 router.get('/api/v1/organizations', listOrganization);
+router.get("/api/v1/organization/:id", detailOrganization);
 router.post(
   '/api/v1/create_organization',
   authenticateToken,

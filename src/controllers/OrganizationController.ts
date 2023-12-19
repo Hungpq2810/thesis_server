@@ -9,6 +9,7 @@ import {
   Organization,
   OrganizationAttributes,
 } from '../models/organization';
+import { organizationMapper } from "../mapper/OrganizationMapper";
 dotenv.config();
 const secretKey = process.env.SECRETKEY as string;
 
@@ -17,15 +18,18 @@ export const listOrganization = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const organizations = await Organization.findAll({
+    const organizationsCurrent = await Organization.findAll({
       where: { status: 0 },
     });
+    const organizations = await organizationMapper(organizationsCurrent);
     if (organizations.length > 0) {
       const response: GeneralResponse<{
         organizations: OrganizationAttributes[];
       }> = {
         status: 200,
-        data: { organizations },
+        data: { 
+          organizations: organizations as unknown as OrganizationAttributes[],
+        },
         message: 'Lấy danh sách tổ chức thành công',
       };
       commonResponse(req, res, response);
@@ -47,6 +51,44 @@ export const listOrganization = async (
     commonResponse(req, res, response);
   }
 };
+
+export const detailOrganization = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const organization = await Organization.findByPk(id);
+    if (organization) {
+      const response: GeneralResponse<{
+        organization: OrganizationAttributes;
+      }> = {
+        status: 200,
+        data: {
+          organization: organization.toJSON(),
+        },
+        message: "Get organization details successfully",
+      };
+      commonResponse(req, res, response);
+    } else {
+      const response: GeneralResponse<{}> = {
+        status: 404,
+        data: null,
+        message: "Organization not found",
+      };
+      commonResponse(req, res, response);
+    }
+  } catch (error: any) {
+    console.error(error);
+    const response: GeneralResponse<{}> = {
+      status: 400,
+      data: null,
+      message: error.message,
+    };
+    commonResponse(req, res, response);
+  }
+};
+
 export const createOrganization = async (
   req: Request,
   res: Response,
