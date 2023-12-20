@@ -61,14 +61,20 @@ import {
   deleteSkill,
   updateSkill,
 } from '../controllers/Admin/SkillController';
-import { listSkills } from '../controllers/SkillController';
+import { 
+  listSkills,
+  getSkillById
+} from '../controllers/SkillController';
 import { newFeedBack } from '../controllers/FeedbackController';
 import {
   createFaq,
   deleteFaq,
   updateFaq,
 } from '../controllers/Admin/FaqController';
-import { listFaq } from '../controllers/FaqController';
+import { 
+  listFaq,
+  getFaqById 
+} from '../controllers/FaqController';
 import { listActivitesBySkills } from '../controllers/SkillActivitesController';
 import { listFeedBack } from '../controllers/Admin/FeedbackController';
 import { listFeedBackByOrganizer } from '../controllers/Organizer/FeedbackController';
@@ -172,8 +178,6 @@ router.delete(
 //FeedBack
 router.get(
   '/api/v1/admin/feedback',
-  authenticateToken,
-  checkRoleAdmin,
   listFeedBack,
 );
 //Activity
@@ -260,6 +264,7 @@ router.get('/api/v1/activities/:id', detailActivity);
 router.post('/api/v1/activities_by_skill', listActivitesBySkills);
 //Skill
 router.get('/api/v1/skills', listSkills);
+router.get("/api/v1/skills/:id", getSkillById);
 //Feedback
 router.post('/api/v1/feedback', newFeedBack);
 //Request Join in Activity By Volunteer
@@ -281,4 +286,6 @@ router.post(
 );
 //Faq
 router.get('/api/v1/faq', listFaq);
+router.get("/api/v1/faq/:id", getFaqById);
+
 export default router;

@@ -59,7 +59,7 @@ export const updateRequestOrganization = async (
   try {
     const organizationId = req.body.organization_id as number;
     const checkStatus = req.body.status as number;
-    if (checkStatus === 0) {
+    if (checkStatus === 2) {
       const body = { status: 0, updated_at: new Date() };
       const organizationRequestRecord =
         await OrganizationRequest.findOne({

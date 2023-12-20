@@ -32,7 +32,7 @@ export const mappedActivities = (activities: ActivityAttributes[]) => {
         status,
         created_at,
         updated_at,
-        creator: creatorName,
+        creator: creatorId,
         feedback: mappedFeedbacks,
       };
     } catch (error) {

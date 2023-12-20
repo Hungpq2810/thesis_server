@@ -5,6 +5,7 @@ import {
   commonResponse,
 } from '../../utilities/CommonResponse';
 import { Feedback, FeedbackAttributes } from '../../models/feedback';
+import { feedbackMapper } from "../../mapper/FeedbackMapper";
 dotenv.config();
 
 export const listFeedBack = async (
@@ -12,10 +13,11 @@ export const listFeedBack = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const feedbacks = await Feedback.findAll();
+    const feedbacksCurrent = await Feedback.findAll();
+    const feedbacks = await feedbackMapper(feedbacksCurrent);
     if (feedbacks.length > 0) {
       const response: GeneralResponse<{
-        feedbacks: FeedbackAttributes[];
+        feedbacks: any;
       }> = {
         status: 200,
         data: { feedbacks },

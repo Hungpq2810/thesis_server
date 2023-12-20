@@ -28,3 +28,36 @@ export const listFaq = async (
     commonResponse(req, res, response);
   }
 };
+
+export const getFaqById = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const faq = await FAQ.findByPk(id);
+    if (faq) {
+      const response: GeneralResponse<any> = {
+        status: 200,
+        data: faq.toJSON(),
+        message: "Get FAQ by ID successfully",
+      };
+      commonResponse(req, res, response);
+    } else {
+      const response: GeneralResponse<{}> = {
+        status: 404,
+        data: null,
+        message: "FAQ not found",
+      };
+      commonResponse(req, res, response);
+    }
+  } catch (error: any) {
+    console.error(error);
+    const response: GeneralResponse<{}> = {
+      status: 400,
+      data: null,
+      message: error.message,
+    };
+    commonResponse(req, res, response);
+  }
+};

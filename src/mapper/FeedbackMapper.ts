@@ -1,3 +1,4 @@
+import { Activities } from "../models/activities";
 import { FeedbackAttributes } from "../models/feedback";
 import { Users } from "../models/users";
 
@@ -18,6 +19,7 @@ export const feedbackMapper = async (feedbacks: FeedbackAttributes[]) => {
         const user = await Users.findByPk(user_id);
         const userName = user ? user.name : null;
         const userAvatar = user ? user.avatar : null;
+        const activity = await Activities.findByPk(activity_id)
 
         return {
           id,
@@ -28,7 +30,8 @@ export const feedbackMapper = async (feedbacks: FeedbackAttributes[]) => {
           created_at,
           updated_at,
           name: userName,
-          avatar: userAvatar
+          avatar: userAvatar,
+          activity: activity
         };
       } catch (error) {
         console.error("Error fetching user:", error);
