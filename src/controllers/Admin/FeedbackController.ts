@@ -13,7 +13,9 @@ export const listFeedBack = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const feedbacksCurrent = await Feedback.findAll();
+    const feedbacksCurrent = await Feedback.findAll({
+      where: {activity_id: 0}
+    });
     const feedbacks = await feedbackMapper(feedbacksCurrent);
     if (feedbacks.length > 0) {
       const response: GeneralResponse<{

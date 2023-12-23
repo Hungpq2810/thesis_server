@@ -3,8 +3,9 @@ import {
   GeneralResponse,
   commonResponse,
 } from '../../utilities/CommonResponse';
-import { Organization } from '../../models/organization';
+import { Organization, OrganizationAttributes } from '../../models/organization';
 import { Users } from '../../models/users';
+import { organizationMapper } from '../../mapper/OrganizationMapper';
 
 export const deleteOrganization = async (
   req: Request,
@@ -65,6 +66,7 @@ export const updateOrganization = async (
       name: req.body.name as string,
       description: req.body.description as string,
       location: req.body.location as string,
+      status: req.body.status as number,
       updated_at: new Date(),
     };
 
@@ -79,6 +81,43 @@ export const updateOrganization = async (
       commonResponse(req, res, response);
     } else {
       res.status(400).json({ message: "Failed to update organization" });
+    }
+  } catch (error: any) {
+    console.error(error);
+    const response: GeneralResponse<{}> = {
+      status: 400,
+      data: null,
+      message: error.message,
+    };
+    commonResponse(req, res, response);
+  }
+};
+
+export const listOrganizationAdmin = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const organizationsCurrent = await Organization.findAll();
+    const organizations = await organizationMapper(organizationsCurrent);
+    if (organizations.length > 0) {
+      const response: GeneralResponse<{
+        organizations: OrganizationAttributes[];
+      }> = {
+        status: 200,
+        data: { 
+          organizations: organizations as unknown as OrganizationAttributes[],
+        },
+        message: 'Lấy danh sách tổ chức thành công',
+      };
+      commonResponse(req, res, response);
+    } else {
+      const response: GeneralResponse<{}> = {
+        status: 200,
+        data: [],
+        message: 'Không có tổ chức nào',
+      };
+      commonResponse(req, res, response);
     }
   } catch (error: any) {
     console.error(error);

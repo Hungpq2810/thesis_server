@@ -1,3 +1,4 @@
+import { listOrganizationAdmin } from './../controllers/Admin/OrganizationController';
 import express from 'express';
 import {
   login,
@@ -79,6 +80,8 @@ import { listActivitesBySkills } from '../controllers/SkillActivitesController';
 import { listFeedBack } from '../controllers/Admin/FeedbackController';
 import { listFeedBackByOrganizer } from '../controllers/Organizer/FeedbackController';
 import { deleteActivityByAdmin } from '../controllers/Admin/ActivityController';
+import { getVolunteer } from "../controllers/Organizer/VolunteerController";
+
 
 const router = express.Router();
 //Auth
@@ -124,6 +127,12 @@ router.put(
   checkRoleAdmin, 
   updateOrganization
 );
+router.get(
+  '/api/v1/admin/organizations',
+  authenticateToken,
+  checkRoleAdmin,
+  listOrganizationAdmin,
+)
 //Request Organization
 router.get(
   '/api/v1/admin/request_organization',
@@ -240,6 +249,8 @@ router.put(
   checkRoleOrganizer,
   updateApplyVolunteer,
 );
+//Volunteer manager
+router.get("/api/v1/organizer/volunteers", authenticateToken, checkRoleOrganizer, getVolunteer)
 //User
 router.put('/api/v1/user', authenticateToken, updateProfile);
 router.get('/api/v1/user', authenticateToken, detailUser);
