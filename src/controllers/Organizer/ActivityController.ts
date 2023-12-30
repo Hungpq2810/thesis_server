@@ -106,6 +106,7 @@ export const updateActivity = async (
           description: req.body.description as string,
           location: req.body.location as string,
           updated_at: new Date(),
+          status: req.body.status,
         };
 
         await Activities.update(updatedActivity, {
