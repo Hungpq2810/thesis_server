@@ -40,8 +40,8 @@ export const createActivity = async (
         description: req.body.description as string,
         location: req.body.location as string,
         num_of_volunteers: 0,
+        image: req.body.image as string,
         status: 1,
-        image: req.body.image,
         created_at: new Date(),
         updated_at: new Date(),
       };
@@ -106,6 +106,7 @@ export const updateActivity = async (
           description: req.body.description as string,
           location: req.body.location as string,
           updated_at: new Date(),
+          status: req.body.status,
         };
 
         await Activities.update(updatedActivity, {

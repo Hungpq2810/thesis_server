@@ -11,6 +11,7 @@ import {
   VolunteerRequest,
   VolunteerRequestAttributes,
 } from "../models/volunteer_request";
+import { Organization, OrganizationAttributes } from '../models/organization';
 dotenv.config();
 const secretKey = process.env.SECRETKEY as string;
 
@@ -47,13 +48,35 @@ export const updateProfile = async (
           created_at: new Date(),
           updated_at: new Date(),
         }));
-        for (const skill of skills) {
-          await SkillUsers.create(skill);
-        }
+         // Tìm kiếm tất cả các cặp skill-user hiện có của user
+  const existingSkills = await SkillUsers.findAll({
+    where: { user_id: userId },
+  });
+
+  // Xóa các cặp skill-user không có trong input mới
+  const deletedSkills = existingSkills.filter((skill) => !skills.includes(skill.skill_id));
+  for (const skill of deletedSkills) {
+    await SkillUsers.destroy({
+      where: { skill_id: skill.skill_id, user_id: userId },
+    });
+  }
+
+  // Thêm hoặc cập nhật các cặp skill-user mới
+  for (const skill of skills) {
+    const existingSkill = existingSkills.find((s) => s.skill_id === skill.skill_id);
+
+    if (existingSkill) {
+      // Nếu cặp skill-user đã tồn tại, chỉ cần cập nhật thời gian updated_at
+      await existingSkill.update({ updated_at: new Date() });
+    } else {
+      // Nếu cặp skill-user chưa tồn tại, tạo mới
+      await SkillUsers.create(skill);
+    }
+  }
       }
       const body = req.body;
       delete body.role_id;
-      delete body.organization_id;
+      // delete body.organization_id;
       const result = await user.update(body);
       const response: GeneralResponse<UserAttributes> = {
         status: 200,
@@ -103,20 +126,31 @@ export const detailUser = async (
     const userSkills = await SkillUsers.findAll({
       where: { user_id: userId },
     });
-    const userOrgainzer = await VolunteerRequest.findOne({
+    const userOrganizerRequest = await VolunteerRequest.findOne({
       where: { user_id: userId },
     });
+    const userOrganization = userOrganizerRequest
+      ? await Organization.findOne({
+          where: { id: userOrganizerRequest.organization_id },
+        })
+      : null;
 
     const response: GeneralResponse<{
       user: UserAttributes;
       skills: SkillUsers[];
-      belongsOrgainzer: VolunteerRequestAttributes | null;
+      belongsOrganizer: {
+        request: VolunteerRequestAttributes | null;
+        organization: OrganizationAttributes | null;
+      };
     }> = {
       status: 200,
       data: {
         user: user.toJSON() as UserAttributes,
         skills: userSkills,
-        belongsOrgainzer: userOrgainzer,
+        belongsOrganizer: {
+          request: userOrganizerRequest,
+          organization: userOrganization,
+        },
       },
       message: 'Lấy thông tin người dùng thành công',
     };

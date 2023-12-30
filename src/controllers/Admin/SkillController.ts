@@ -19,7 +19,7 @@ export const createSkill = async (
     const result = await Skills.create(body);
     if (result) {
       const response: GeneralResponse<{}> = {
-        status: 400,
+        status: 200,
         data: null,
         message: 'Tạo kỹ năng thành công',
       };

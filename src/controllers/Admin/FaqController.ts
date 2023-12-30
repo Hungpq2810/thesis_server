@@ -19,7 +19,7 @@ export const createFaq = async (
     const result = await FAQ.create(body);
     if (result) {
       const response: GeneralResponse<{}> = {
-        status: 400,
+        status: 200,
         data: null,
         message: 'Tạo FAQ thành công',
       };

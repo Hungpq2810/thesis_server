@@ -29,7 +29,7 @@ export const activityApplyVolunteer = async (
     const user = await Users.findByPk(userId);
 
     if (user) {
-      if (user.organization_id && user.role_id === 2) {
+      if (user.role_id === 2) {
         const response: GeneralResponse<{}> = {
           status: 400,
           data: null,
@@ -39,6 +39,7 @@ export const activityApplyVolunteer = async (
       } else {
         const checkRequestTime = await ActivityApply.findAll({
           where: {
+            id: req.body.activity_id,
             user_id: userId,
             status: 0,
           },
